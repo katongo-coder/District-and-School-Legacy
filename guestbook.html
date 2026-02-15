@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Of Celebration| Chienge DESO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c; /* Navy Blue */
+            --secondary: #b21f1f; /* Crimson Red */
+            --accent: #f2a900;
+            --bg: #f4f7f6;
+            --dark: #1e1e26;
+            --sidebar-width: 260px;
+            --sidebar-collapsed: 70px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Dual-Color Scrolling Header --- */
+        .scrolling-header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white; padding: 12px 0; z-index: 2001; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .scrolling-text {
+            display: inline-block; white-space: nowrap;
+            animation: scroll-text 30s linear infinite;
+            font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+        }
+        @keyframes scroll-text {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- Collapsible Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--dark);
+            height: 100vh; position: fixed; top: 0; left: 0;
+            color: white; padding-top: 60px; z-index: 2000;
+            transition: transform 0.3s ease, width 0.3s ease;
+            overflow: hidden;
+        }
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        
+        .toggle-trigger {
+            position: fixed; top: 10px; left: 20px; 
+            z-index: 2002; cursor: pointer; color: var(--accent); font-size: 24px;
+            line-height: 40px;
+        }
+
+        .sidebar-brand { 
+            padding: 20px; text-align: center; border-bottom: 1px solid #333;
+            white-space: nowrap; transition: opacity 0.2s;
+        }
+        .sidebar.collapsed .sidebar-brand { opacity: 0; }
+
+        .sidebar a {
+            display: flex; align-items: center; color: #adb5bd; padding: 15px 25px;
+            text-decoration: none; transition: 0.3s; white-space: nowrap;
+        }
+        .sidebar a i { min-width: 35px; font-size: 1.2rem; }
+        .sidebar a span { transition: opacity 0.2s; }
+        .sidebar.collapsed a span { opacity: 0; pointer-events: none; }
+
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.1); color: white;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* --- Main Content Adjustment --- */
+        .main-content {
+            margin-left: var(--sidebar-width); margin-top: 60px;
+            width: 100%; padding: 40px;
+            transition: margin-left 0.3s ease;
+            box-sizing: border-box;
+        }
+        .main-content.expanded { margin-left: var(--sidebar-collapsed); }
+
+        /* --- Hero Section --- */
+        .congrats-hero {
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; margin-bottom: 40px;
+            border-bottom: 5px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .congrats-hero h1 { color: var(--primary); margin: 0; font-size: 2.2rem; }
+
+        /* --- Tribute Cards Grid --- */
+        .tribute-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .tribute-card {
+            background: white; padding: 30px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            position: relative; transition: transform 0.3s ease;
+        }
+        .tribute-card:hover { transform: translateY(-5px); }
+        
+        .role-badge {
+            display: inline-block; background: #f0f2f5; color: var(--primary);
+            font-size: 0.75rem; padding: 4px 12px; border-radius: 20px;
+            font-weight: bold; margin-bottom: 15px; text-transform: uppercase;
+        }
+        .sender-name { font-size: 1.2rem; font-weight: bold; color: var(--dark); display: block; }
+        .message-text { color: #444; line-height: 1.7; font-style: italic; margin: 15px 0; font-size: 1.05rem; }
+        .timestamp { font-size: 0.85rem; color: #999; border-top: 1px solid #eee; pt: 10px; margin-top: 15px; }
+
+        .loader { text-align: center; padding: 50px; color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show-mobile { transform: translateX(0); width: var(--sidebar-width); }
+            .main-content { margin-left: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toggle-trigger" onclick="toggleMenu()">☰</div>
+
+    <div class="scrolling-header">
+        <div class="scrolling-text">
+            Official Tribute Portal: Celebrating Mr. Kapompo's Promotion to Chienge District Education Standard Officer (DESO) — Messages are moderated for integrity — Excellence in Leadership —
+        </div>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2 style="color: var(--accent); margin-bottom: 0;">CHIENGE</h2>
+            <small style="color: #888;">DISTRICT EDUCATION</small>
+        </div>
+        <a href="index.html"><i class="fas fa-home"></i><span>Home Portal</span></a>
+        <a href="guestbook.html" class="active"><i class="fas fa-book-open"></i><span>Public Portal</span></a>
+        <a href="dashboard.html"><i class="fas fa-user-shield"></i><span>Admin Login</span></a>
+    </nav>
+
+    <div class="main-content" id="mainContent">
+        <div class="congrats-hero">
+            <h1>Voice Of Celebration and Farewell</h1>
+            <p>Voices of appreciation from Staff,family and friends.</p>
+        </div>
+
+        <div id="loading" class="loader">
+            <i class="fas fa-spinner fa-spin"></i> Loading Approved Tributes...
+        </div>
+        
+        <div class="tribute-grid" id="tributeWall">
+            </div>
+    </div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbzlbOrXzyU67xrhqcekPWRsRf78H405Uo7M0W1iReRjz8qMepqFJQdh9WShGw7UFS1O/exec";
+
+        // Sidebar Toggle Logic
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('mainContent');
+            
+            if (window.innerWidth > 768) {
+                sidebar.classList.toggle('collapsed');
+                main.classList.toggle('expanded');
+            } else {
+                sidebar.classList.toggle('show-mobile');
+            }
+        }
+
+        // Extraction Logic
+        async function loadWall() {
+            const wall = document.getElementById('tributeWall');
+            const loader = document.getElementById('loading');
+
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                // Extraction: Only pull messages where status is 'approved'
+                const approvedData = data.filter(t => t.status === 'approved');
+
+                loader.style.display = 'none';
+                wall.innerHTML = '';
+
+                if (approvedData.length === 0) {
+                    wall.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">
+                        <i class="fas fa-feather-alt" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3>The wall is currently being prepared.</h3>
+                        <p>Approved messages will appear here shortly.</p>
+                    </div>`;
+                    return;
+                }
+
+                approvedData.forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = 'tribute-card';
+                    card.innerHTML = `
+                        <span class="role-badge">${t.role}</span>
+                        <span class="sender-name">${t.name}</span>
+                        <p class="message-text">"${t.msg}"</p>
+                        <div class="timestamp">
+                            <i class="far fa-calendar-alt"></i> 
+                            ${new Date(t.time).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </div>
+                    `;
+                    wall.appendChild(card);
+                });
+
+            } catch (error) {
+                loader.innerHTML = '<span style="color:var(--secondary)">Error: Could not sync with the legacy database.</span>';
+                console.error(error);
+            }
+        }
+
+        window.onload = loadWall;
+    </script>
+</body>
+</html>
